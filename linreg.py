@@ -43,13 +43,11 @@ if __name__ == "__main__":
         X = np.asmatrix(np.array(l).astype('float')).T
         return np.dot(X, X.T)
 
-
     def keyb(l):
         Y = float(l[0])
         l[0] = 1.0
         X = np.asmatrix(np.array(l).astype('float')).T
-        return np.multiply(X.T, Y)
-
+        return np.multiply(X, Y)
 
     A = np.asmatrix(yxlines.map(lambda l: ("keyA", keyA(l))).reduceByKey(
         lambda x, y: np.add(x, y)).map(lambda l: l[1]).collect()[0])
@@ -58,10 +56,10 @@ if __name__ == "__main__":
         lambda x, y: np.add(x, y)).map(lambda l: l[1]).collect()[0])
 
     beta = np.array(np.dot(np.linalg.inv(A), b)).tolist()
-    
+
     # print the linear regression coefficients in desired output format
-    print "beta: "
+    print('beta: ')
     for coeff in beta:
-        print coeff
+        print(coeff[0])
 
     sc.stop()
